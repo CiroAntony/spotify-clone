@@ -1,0 +1,38 @@
+---
+import NavMenu from "../../components/NavMenu.astro";
+import Layout from "../../layouts/Layout.astro";
+import { playlists, songs } from "../../lib/data";
+import { CardPlayButton } from "../../components/CardPlayButton";
+import {SongsList} from "../../components/SongsList"
+
+const {id} = Astro.params
+
+const selectedPlaylist = playlists.find(playlist => playlist.id === id)
+const playlistSongs = songs.filter(song => song.albumId.toString() === id)
+
+---
+<Layout title=`${selectedPlaylist?.title}`>
+    <div transition:name=`playlist ${id} box` class={`flex gap-2 flex-col h-full ${selectedPlaylist?.color}`}
+    >
+    <span class="p-4">
+        <NavMenu/>
+    </span>
+        <header class="flex flex-col md:flex-row gap-8 items-center p-4">
+            <picture>
+                <img src={selectedPlaylist?.cover} transition:name=`playlist ${id} image` class="w-40 rounded-md h-auto aspect-square shadow-lg">
+            </picture>
+            <div class="flex flex-col gap-2">
+                <p>Playlist</p>
+                    <h1 transition:name=`playlist ${id} title` class="font-bold text-2xl md:text-7xl">{selectedPlaylist?.title}</h1>
+                <p transition:name=`playlist ${id} artists` class="opacity-50">{selectedPlaylist?.artists.join(", ")}</p>
+                <span><strong>Spotify | </strong>{playlistSongs.length} Canciones</span>
+            </div>
+        </header>
+        <section class="p-4 bg-zinc-900/30 h-full">
+            <div class="mb-6 text-black">
+                <CardPlayButton variant='large' size="large" id={id} client:visible/>
+            </div>
+            <SongsList client:visible songs={playlistSongs}/>
+        </section>
+    </div>
+</Layout>

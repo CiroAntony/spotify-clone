@@ -1,0 +1,17 @@
+---
+import { playlists } from "../lib/data";
+const {playlist} = Astro.props
+const {id, cover, title, artists,} = playlist
+
+const artistString = artists.join(", ")
+---
+
+    <a href={`/playlist/${id}`} class="flex w-full text-base relative overflow-hidden p-1 items-center gap-3 rounded-md hover:bg-zinc-800"> 
+        <picture class="w-[44px] h-[44px] flex-none shadow-md">
+            <img src={cover} class="object-cover w-full h-full rounded-md" alt="">
+        </picture>
+        <span class="truncate hidden md:block text-zinc-400">
+            <h4 class="text-white -mb-1">{title}</h4>
+            <small class="text-xs">{artistString}</small>
+        </span>
+    </a>

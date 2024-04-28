@@ -1,0 +1,53 @@
+---
+import Aside from '../components/Aside.astro';
+import { ViewTransitions } from "astro:transitions"
+import {Player} from "../components/Player"
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<ViewTransitions fallback="none" />
+	</head>
+	<body>
+		<div id="app" class="relative h-screen p-2 gap-2 text-xs [grid-template-columns:_auto_1fr] md:[grid-template-columns:_300px_1fr]">
+			<aside class="[grid-area:aside] flex flex-col overflow-y-auto">
+				<Aside/>
+			</aside>
+
+			<main class="[grid-area:main] rounded-md overflow-y-auto bg-zinc-900 w-full">
+				<slot />
+			</main>
+
+			<footer class="[grid-area:player] bg-black rounded-md z-50">
+				<Player client:load transition:name="player" transition:persist/>
+			</footer>
+		</div>
+	</body>
+</html>
+<style>
+	#app{
+		display: grid;
+		grid-template-areas: 
+			"aside main main"
+			"player player player";
+		grid-template-rows: 1fr auto;
+	}
+
+	body{
+		background-color: black;
+		color: white;
+	}
+</style>

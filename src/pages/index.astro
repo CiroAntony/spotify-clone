@@ -1,0 +1,21 @@
+---
+import PlayListCard from '../components/PlayListCard.astro';
+import Layout from '../layouts/Layout.astro';
+import { playlists } from '../lib/data';
+import NavMenu from '../components/NavMenu.astro';
+---
+
+<Layout title="Spotify Clone">
+    <div class="bg-gradient-to-b from-green-600 to-zinc-900 pb-12">
+        <section class="p-4">
+            <NavMenu/>
+            <h2 class="font-bold text-2xl mt-2">Buenos dias</h2>
+        </section>
+
+        <div class="flex flex-wrap gap-4 px-4">
+            {
+                playlists.map(playlist => <PlayListCard playlist={playlist}/>)
+            }
+        </div>
+    </div>
+</Layout>

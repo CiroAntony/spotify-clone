@@ -1,0 +1,7 @@
+.playlist-song:hover .playlist-number {
+    opacity: 0;
+}
+
+.playlist-song:hover .playlist-button {
+    opacity: 1;
+}
